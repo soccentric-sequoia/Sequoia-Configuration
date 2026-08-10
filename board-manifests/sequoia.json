@@ -1,0 +1,125 @@
+{
+  "platform": "sequoia",
+  "model": "x86-rt5",
+  "board_name": "LattePanda x86 RT 5 (Sequoia)",
+  "has_rtc": true,
+  "has_tpm": true,
+  "secure_boot": true,
+  "service_allowlist": [
+    "sshd.service",
+    "systemd-networkd.service",
+    "systemd-resolved.service",
+    "wpa_supplicant.service",
+    "webconfigd.service"
+  ],
+  "peripherals": [
+    {
+      "id": "ttyS0",
+      "device": "/dev/ttyS0",
+      "human_name": "COM0",
+      "kind": "serial",
+      "caps": { "modes": ["rs232"] }
+    },
+    {
+      "id": "ttyS1",
+      "device": "/dev/ttyS1",
+      "human_name": "COM1",
+      "kind": "serial",
+      "caps": { "modes": ["rs232"] }
+    },
+    {
+      "id": "ttyUSB0",
+      "device": "/dev/ttyUSB0",
+      "human_name": "USB-UART bridge",
+      "kind": "serial",
+      "caps": { "modes": ["rs232"] }
+    },
+    {
+      "id": "can0",
+      "device": "can0",
+      "human_name": "CAN channel 0 (south-bridge)",
+      "kind": "can",
+      "caps": { "fd": true, "termination_gpio": "gpio-can0-term" }
+    },
+    {
+      "id": "i2c-0",
+      "device": "/dev/i2c-0",
+      "human_name": "I2C bus 0 (SoM)",
+      "kind": "i2c",
+      "caps": {}
+    },
+    {
+      "id": "spi0",
+      "device": "/dev/spidev0.0",
+      "human_name": "SPI bus 0",
+      "kind": "spi",
+      "caps": {}
+    },
+    {
+      "id": "gpio-led-system",
+      "device": "gpiochip0 line 2",
+      "human_name": "System status LED",
+      "kind": "gpio",
+      "caps": { "direction": "out", "active_low": false, "function": "led", "role": "system" }
+    },
+    {
+      "id": "gpio-btn-recovery",
+      "device": "gpiochip0 line 4",
+      "human_name": "Recovery button",
+      "kind": "gpio",
+      "caps": { "direction": "in", "active_low": true }
+    },
+    {
+      "id": "gpio-can0-term",
+      "device": "gpiochip0 line 6",
+      "human_name": "CAN0 termination",
+      "kind": "gpio",
+      "caps": { "direction": "out" }
+    },
+    {
+      "id": "iommu-vtd",
+      "device": "/dev/vfio/vfio",
+      "human_name": "VT-d IOMMU",
+      "kind": "fpga",
+      "caps": { "role": "south-bridge" }
+    },
+    {
+      "id": "thermal-zone-0",
+      "device": "/sys/class/thermal/thermal_zone0",
+      "human_name": "Package thermal zone (x86)",
+      "kind": "thermal",
+      "caps": { "throttle": true }
+    },
+    {
+      "id": "eth0",
+      "device": "eth0",
+      "human_name": "Ethernet 0 (GbE)",
+      "kind": "net",
+      "caps": {}
+    },
+    {
+      "id": "wlan0",
+      "device": "wlan0",
+      "human_name": "Wi-Fi",
+      "kind": "net",
+      "caps": { "ap": true }
+    }
+  ],
+  "wifi_radio": {
+    "interface": "wlan0",
+    "hw_mode": "g",
+    "channel": 7
+  },
+  "dashboard_tiles": [
+    { "id": "cpu", "title": "CPU utilization", "metrics": ["cpu.util"], "render": "sparkline" },
+    { "id": "thermal", "title": "Package thermal", "metrics": ["thermal.temp", "temp.throttled"], "render": "state" },
+    { "id": "clock", "title": "CPU frequency", "metrics": ["cpu.freq"], "render": "value" },
+    { "id": "tpm", "title": "TPM status", "metrics": ["tpm.present"], "render": "state" }
+  ],
+  "default_alert_rules": [
+    { "id": "disk-full", "enabled": true, "metric": "disk.pct", "comparison": ">", "threshold": 90, "duration_secs": 60, "actions": ["ui"] },
+    { "id": "watchdog-reset", "enabled": true, "metric": "boot.watchdog", "comparison": ">", "threshold": 0, "duration_secs": 0, "actions": ["ui"] },
+    { "id": "throttling", "enabled": true, "metric": "temp.throttled", "comparison": ">", "threshold": 0, "duration_secs": 30, "actions": ["ui"] },
+    { "id": "cert-expiry", "enabled": true, "metric": "cert.*", "comparison": "<", "threshold": 30, "duration_secs": 0, "actions": ["ui"] }
+  ]
+}
