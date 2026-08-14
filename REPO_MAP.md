@@ -1,6 +1,6 @@
 # Sequoia-Configuration
 
-**Remote:** `git@github.com:SiliconCentric/Sequoia-Configuration.git`
+**Remote:** `git@github.com:soccentric-sequoia/Sequoia-Configuration.git`
 **Parent project:** [Sequoia](../Sequoia.md) (target hardware: **Intel x86 RT 5**.)
 **Leaf type:** `<Project>-Configuration`
 **Status:** REAL — actively built out
