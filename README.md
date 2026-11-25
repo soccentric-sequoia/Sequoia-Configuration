@@ -120,4 +120,4 @@ Use `make build && make test && make lint` for the documented validation gate.
 
 ## License
 
-CLOSED (SoCcentric internal IV&V tooling).
+MIT. See [LICENSE](LICENSE).
